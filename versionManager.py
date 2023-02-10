@@ -107,3 +107,35 @@ def applyVersion(vers) :
                 print(f'No migration DOWN file for version {v}')
     else :
         print('Version already installed !')
+
+
+# MAIN FUNCTION
+def main() :
+    # Create table if not existing
+    applySQLFile('CREATE TABLE IF NOT EXISTS __migrations (version SERIAL PRIMARY KEY)')
+
+    # Get versions
+    actV = getActualVersion()
+    totalVer = getVersions()
+
+    # Infos
+    print('-------- VERSION MANAGER --------')
+    print(f'Actual Version : {actV}')
+    print(f'Max version available : {len(totalVer) - 1}\n\n')
+
+    # Wait for version input
+    versInput = input('Which version do you want to migrate to ?  ')
+    
+    if not versInput.isnumeric() :
+        print('Enter a number !')
+    else :
+        ver = int(versInput)
+        
+        if ver < -1 : # Too low
+            print('Enter a number > -1 !')
+        elif ver < len(totalVer) - 1 : # Too high
+            print(f'Max version : {len(totalVer) - 1}')
+        else : # Good version number
+            applyVersion(ver)
+
+main()
