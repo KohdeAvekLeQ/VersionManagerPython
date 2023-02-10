@@ -1,0 +1,7 @@
+{
+    "serverIP": "localhost",
+    "defaultSQLUser": "",
+    "defaultSQLDatabase": "",
+    "defaultSQLPassword": "",
+    "pathToFiles": "./migrations"
+}
