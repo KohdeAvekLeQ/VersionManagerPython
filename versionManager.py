@@ -65,8 +65,7 @@ def applyVersion(vers) :
             for i in range(len(files)) :
                 if files[i].count('.sql') != 0 and files[i].count('up') != 0:
                     upFiles.append(files[i])
-            print(upFiles)
-
+                    
             # Apply vers
             if len(upFiles) > 0 :
                 file = open(config['pathToFiles'] + "/" + dir + "/" + upFiles[0], 'r')
@@ -84,13 +83,11 @@ def applyVersion(vers) :
             dir = dirs[v]
 
             files = os.listdir(config['pathToFiles'] + '/' + dir)
-            print(files)
 
             downFiles = []
             for i in range(len(files)) :
                 if files[i].count('.sql') != 0 and files[i].count('down') != 0:
                     downFiles.append(files[i])
-            print(downFiles)
 
             # Apply vers
             if len(downFiles) > 0 :
