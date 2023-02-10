@@ -60,7 +60,6 @@ def applyVersion(vers) :
             dir = dirs[v]
 
             files = os.listdir(config['pathToFiles'] + '/' + dir)
-            print(files)
             
             upFiles = []
             for i in range(len(files)) :
@@ -70,7 +69,7 @@ def applyVersion(vers) :
 
             # Apply vers
             if len(upFiles) > 0 :
-                file = open(upFiles[0], 'r')
+                file = open(config['pathToFiles'] + "/" + dir + "/" + upFiles[0], 'r')
 
                 applySQLFile(file.read())
                 applySQLFile(f"INSERT INTO __migrations(version) VALUES ({v});")
@@ -80,8 +79,8 @@ def applyVersion(vers) :
                 print(f'Upgraded to V{v}')
             else :
                 print(f'No migration UP file for version {v}')
-    elif vers > version : # Rollback to old version
-        for v in range(version, vers) :
+    elif vers < version : # Rollback to old version
+        for v in range(version, vers, -1) :
             dir = dirs[v]
 
             files = os.listdir(config['pathToFiles'] + '/' + dir)
@@ -95,7 +94,7 @@ def applyVersion(vers) :
 
             # Apply vers
             if len(downFiles) > 0 :
-                file = open(downFiles[0], 'r')
+                file = open(config['pathToFiles'] + "/" + dir + "/" + downFiles[0], 'r')
 
                 applySQLFile(file.read())
                 applySQLFile(f"DELETE FROM __migrations WHERE version={v};")
@@ -126,14 +125,14 @@ def main() :
     # Wait for version input
     versInput = input('Which version do you want to migrate to ?  ')
     
-    if not versInput.isnumeric() :
+    if not versInput.isnumeric() and versInput != '-1' :
         print('Enter a number !')
     else :
         ver = int(versInput)
         
         if ver < -1 : # Too low
             print('Enter a number > -1 !')
-        elif ver < len(totalVer) - 1 : # Too high
+        elif ver > len(totalVer) - 1 : # Too high
             print(f'Max version : {len(totalVer) - 1}')
         else : # Good version number
             applyVersion(ver)
