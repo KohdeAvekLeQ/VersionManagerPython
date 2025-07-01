@@ -1,23 +1,23 @@
 # Version Manager Python
-Python version manager for PGSQL database.
+Python version manager for PostgreSQL databases, inspired by Django's system.
 
 
 ## Configuration :
-- Enter your database informations in the `config.json` file,
+- Enter your database information in the `config.json` file,
 - Edit the link to the folder where the `.sql` files will be located if different
-- Create a folder for every version in this format :
+- Create a folder for every version in this format, starting with 0000 :
 ```
-./00001_name1 :
+./0001_name1 :
     -> up.sql
     -> down.sql
-./00002_name2 :
+./0002_name2 :
     -> up.sql
     -> down.sql
 ...
 ```
 - Each folder must contain 2 files, one to upgrade version, and one to downgrade version.
 
-See an example of migration in the `./migrations` folder, with the `00000_base` folder.
+See an example of migration in the `./migrations` folder, with the `0000_base` folder.
 
 
 ## Usage :

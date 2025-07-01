@@ -9,10 +9,10 @@ config = json.load(cgFile)
 
 # Connection
 conn = psycopg2.connect(
-    database = config['defaultSQLDatabase'], 
-    user = config['defaultSQLUser'], 
-    password = config['defaultSQLPassword'], 
-    host = config['serverIP'], 
+    database = config['database'], 
+    user = config['user'], 
+    password = config['password'], 
+    host = config['host'], 
     port = "5432"
 )
 cur = conn.cursor()
